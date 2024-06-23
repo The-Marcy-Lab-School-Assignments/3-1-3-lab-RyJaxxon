@@ -27,14 +27,28 @@ export default async function app(appDiv) {
   newUserFormEl.id = 'new-user-form';
   appDiv.append(newUserFormEl);
   // Render the form!
-  // renderNewUserForm;
+  renderNewUserForm(newUserFormEl);
 
-  // Fetch the books!
-  // const books =
-  // render out the books
-  // renderBookList
+  // Fetch and render the books!
+  getFirstThreeFantasyBooks().then((books) => renderBookList(bookListEl,books));
 
-  // bookListEl.addEventListener('???', () => {})
+  // Fetch and render author test
+  // getAuthor(`/authors/OL22098A`).then((author) => renderAuthorInfo(authorInfoEl, author))
 
-  // newUserFormEl.addEventListener('???', () => {})
+  bookListEl.addEventListener('click', (e) => {
+    e.preventDefault();
+    const urlKey = e.target.dataset.authorUrlKey;
+    getAuthor(urlKey).then((author) => renderAuthorInfo(authorInfoEl, author))
+  })
+
+  newUserFormEl.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target)
+    const formObject = Object.fromEntries(formData);
+    createNewUser(formObject).then((newUser) => {
+      console.log(newUser);
+      renderNewUser(newUserEl,newUser)
+  });
+    newUserFormEl.reset();
+  })
 }
