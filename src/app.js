@@ -30,7 +30,7 @@ export default async function app(appDiv) {
   renderNewUserForm(newUserFormEl);
 
   // Fetch and render the books!
-  getFirstThreeFantasyBooks().then((books) => renderBookList(bookListEl,books));
+  renderBookList(bookListEl, await getFirstThreeFantasyBooks());
 
   // Fetch and render author test
   // getAuthor(`/authors/OL22098A`).then((author) => renderAuthorInfo(authorInfoEl, author))
